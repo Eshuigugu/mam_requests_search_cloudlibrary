@@ -126,6 +126,7 @@ def main():
                          (x['cat_name'].startswith('Ebooks ') or x['cat_name'].startswith('Audiobooks '))
                          and x['filled'] == 0
                          and x['torsatch'] == 0
+                         and x['category'] != 79  # remove magazines/newspapers
                          and x['id'] not in blacklist]
     for book in req_books_reduced:
         mediatype = book['cat_name'].split(' ')[0][:5].lower()  # will be ebook or audio
