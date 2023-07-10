@@ -44,11 +44,10 @@ def search_cloudlibrary(title, authors, mediatype):
         api_url = f'https://ebook.yourcloudlibrary.com/library/{library_name}/search'
         for query in queries:
             params = {
-                'format': mediatype,
-                'available': 'true',
+                'format': 'digital' if mediatype == 'ebook' else mediatype,
+                'available': 'Any',
                 'language': '',
                 'sort': '',
-                'segment': '1',
                 'orderBy': 'relevence',
                 'owned': 'yes',
                 'query': query,
@@ -66,7 +65,7 @@ def search_cloudlibrary(title, authors, mediatype):
                 for media_item in r_json['results']['search']['items']:
                     for k, v in list(media_item.items()):
                         media_item[k.lower()] = v
-                    media_item['url'] = f'https://ebook.yourcloudlibrary.com/library/{library_name}/Featured/ItemDetail/{media_item["id"]}'
+                    media_item['url'] = f'https://ebook.yourcloudlibrary.com/library/{library_name}/detail/{media_item["documentId"]}'
                 media_items += r_json['results']['search']['items']
     # ensure each result is unique
     media_items = list({x['url']: x for x in media_items}.values())
